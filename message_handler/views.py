@@ -4,11 +4,13 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 from twilio.request_validator import RequestValidator
 
 from .models import Message, UserProfile
 from .tasks import process_offline_messages
+
 
 # Create your views here.
 
@@ -17,7 +19,7 @@ from .tasks import process_offline_messages
 def receive_whatsapp_message(request):
     if request.method == 'POST':
         # validate twilio webhook
-        validator = RequestValidator('')
+        validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
 
         # extract message details
         sender = request.POST.get('From')

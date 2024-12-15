@@ -49,7 +49,19 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
+TWILIO_SID = config('TWILIO_SID')
 
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'REDIS://localhost:6379'
+
+# periodic tasks
+CELERY_BEAT_SCHEEDULE = {
+    'process-offline-messags': {
+        'task': 'messages.tasks.processoffline-messages',
+        'schedule': 300.0, # to run for every 5 minutes
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

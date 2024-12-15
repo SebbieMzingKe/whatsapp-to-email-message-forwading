@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
-from message_handler.models import UserProfile
+from message_handler.models import UserProfile, Message
 
 # Create your views here.
 
@@ -32,5 +32,6 @@ def sync_pending_messages(user):
 
     for message in unsynced_messages:
 
+        # implement whatsapp API call to sync messages
         message.is_synced = True
         message.save()
